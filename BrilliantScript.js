@@ -9,8 +9,8 @@ function saveCart() {
 }
 
 function getPrice(food) {
-  return 6.99 + (food.caloriesPerServing / 1000);
-}
+    return food.price;
+  }
 
 const isMenuPage = document.querySelector("#FoodItems") !== null;
 const isCartPage = document.querySelector("#CartItems") !== null;
@@ -49,7 +49,7 @@ function initMenu() {
   modal.prepend(closeBtn);
   /* totally got the css from chat full transparency  */
 
-  /* DATA (DummyJSON for now; swap in your own domain later) */
+  /* DATA (DummyJSON for now; swap in your own domain later) 
   fetch("https://dummyjson.com/recipes?limit=50")
     .then(response => response.json())
     .then(data => {
@@ -58,8 +58,28 @@ function initMenu() {
     })
     .catch(error => console.log("Error loading recipes:", error));
 
+    */
+  // THIS IS THE PROPER DATABASE, HOWEVER IT NEEDS PICTURES
+  fetch("data/menu.json")
+  .then(response => response.json())
+  .then(data => {
+    recipes = data.recipes;
+    displayFood(recipes);
+  })
+  
+  .catch(error => console.log("Error loading recipes:", error));
   /* FOOD CARDS */
   function displayFood(foodList) {
+    function openModal(food) {
+        selectedFood = food;
+      
+        modal.querySelector("h1").textContent = food.name;
+        modal.querySelector("h3").textContent = food.ingredients.join(", ");
+        modal.querySelector("#Price").textContent = "$" + getPrice(food).toFixed(2);
+        modal.querySelector("img").src = food.image;
+        modal.querySelector("#Adjuster #value").textContent = "1";
+        modal.style.display = "block";
+      }
     const foodContainer = document.querySelector("#FoodItems");
 
     foodContainer.innerHTML = foodList.map(food => `
