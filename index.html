@@ -1,15 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Trad:wght@100..400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brilliant Burger Home Page</title>
     <link rel="stylesheet" href="Brilliant.css">
 </head>
 <body>
-    <section class="nav">
-        
+
+    <section class="StartScreenOverlay">
+        <h1>Brillliant Burger</h1>
+        <img src="BrilliantBurgerLogo.png" alt="Brilliant Burger Logo" class="logo">
+        <div class="Tagline">
+            <p id="TL1">The Smartest Craving Of All</p>
+            <p id="TL2">The brightest ideas always come from a full stomach</p>
+        </div>
+        <div class="StartButton">
+            <div id="start">Start</div>
+        </div>
     </section>
+
+
+    <section class="MainContent">
+       
+         <nav>
+            <img src="BrilliantBurgerLogo.png" alt="Brilliant Burger Logo" class="logo">
+        </nav>
+       
+        <section class="content">
+            <div class="row" id="Left">
+                <h2>Your First Smart Decision</h2>
+                <h3>Options</h3>
+                    <div class="Cards" id="FoodGenres">
+                        <div id="GenreSelector">
+                            <p> Image</p>
+                            <p>Drinks</p>
+                        </div>
+                        <div id="GenreSelector">
+                            <p> Image</p>
+
+                            <p>Burgers</p>
+                        </div>
+                        <div id="GenreSelector">
+                            <p> Image</p>
+
+                            <p>Deserts</p>
+
+                        </div>
+                        <div id="GenreSelector">
+                            <p> Image</p>
+
+                            <p>Meals</p>
+
+                            
+                        </div>
+                        <div id="GenreSelector">
+                            <p> Image</p>
+
+                            <p>Sides</p>
+                            
+                        </div>
+                        <div id="GenreSelector">
+                            <p> Image</p>
+
+                            <p>Chicken</p>
+
+                            
+                        </div>
+                    </div>
+            <div class="Cards" id="FoodItems">
+                
+                <div id="GenreSelector">
+                    <p>Food1</p>
+                </div>
+                <div id="GenreSelector">
+                    <p>Food1</p>
+                </div>
+                <div id="GenreSelector">
+                    <p>Food1</p>
+                </div>
+                <div id="GenreSelector">
+                    <p>Food1</p>
+                </div>
+                <div id="GenreSelector">
+                    <p>Food1</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" id="Right">
+            <div id="Reciept">
+              <h3>My Order</h3>
+              <p>Take Out</p>
+              <span></span>
+          
+              <div id="cart"></div>
+          
+              <div class="Continue">
+                <div id="HeadToCart">
+                  <hr>
+                  <h4>Total</h4>
+                  <h3>$0.00</h3>
+                  <a src="" href="./Cart.html">
+                                      <button id="ReviewCart">Review Cart</button>
+
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+            
+            <section class="EditItem">
+                <div id="Modal">
+                    <img src="BrilliantBurgerLogo.png" alt="BrilliantBurgerLogo">
+                    <h1>FOOD ITEM</h1>
+                    <h3>Small description explaining the food item in more detail</h3>
+                    <h2 id="Price">PRICE</h2>
+
+                    <div id="Adjuster">
+                        <button><p>-</p></button>
+                        <p id="value">2</p>
+                        <button><p>+</p></button>
+                    </div>
+                    <div class="AddOns">
+                        <div id="AddOn">
+                            <p>Add on Name</p>
+                            <img src="" alt="">
+                                <div id="Adjuster">
+                                    <button><p>-</p></button>
+                                    <p id="value">0</p>
+                                    <button><p>+</p></button>
+                                </div>
+                            
+
+                        </div><div class="Continue">
+                                <div id="panelSubmit">
+                                    <button>Add To Order</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+    </section>
+
 </body>
-<script src="BrilliantScript.js"></script>
-</html>
+<script src="BrilliantScript.js" defer></script></html>

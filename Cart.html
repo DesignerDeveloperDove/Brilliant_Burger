@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brilliant Burger Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Brilliant.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">
+            <img src="BrilliantBurgerLogo.png" alt="Brilliant Burger Logo" class="logo">
+        </a>
+    </nav>
+
+    <section class="CartPage">
+        <h1>Review Your Order</h1>
+
+        <div class="CartPanel">
+            <div class="CartItems" id="CartItems"></div>
+
+            <div class="CartSummary">
+                <div class="CartRow">
+                    <p>Subtotal</p>
+                    <p id="CartSubtotal">$0.00</p>
+                </div>
+                <div class="CartRow">
+                    <p>Tax (<span id="CartTaxRate">0.00</span>%)</p>
+                    <p id="CartTax">$0.00</p>
+                </div>
+                <div class="CartRow">
+                    <p>Total</p>
+                    <h3 id="CartTotal">$0.00</h3>
+                </div>
+            </div>
+
+            <button id="SubmitOrder">Submit Order</button>
+            <a href="index.html" class="BackToMenu">Back to menu</a>
+        </div>
+    </section>
+
+    <script src="BrilliantScript.js" defer></script>
+</body>
+</html>

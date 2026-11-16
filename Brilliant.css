@@ -1,4 +1,947 @@
-body{
-    margin: 0px;
-    background-color: antiquewhite;
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: white;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.StartScreenOverlay {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to bottom, #ff0000, #8b0000);
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 50;
+  transition: transform 1s ease-in-out;
+}
+
+.StartScreenOverlay.slide-up {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.StartScreenOverlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #ff0000, #8b0000);
+  opacity: 1;
+  z-index: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.StartScreenOverlay.reveal::before {
+  opacity: 0;
+}
+
+.StartScreenOverlay  * {
+  position: relative;
+  z-index: 1;
+}
+
+.StartScreenOverlay img {
+  width: 800px;
+  max-width: 100%;
+}
+
+h1 {
+  font-family: "Playwrite IT Trad", cursive;
+  font-size: 48px;
+  margin: 0;
+  text-align: center;
+  color: #FEC208;
+}
+
+.Tagline {
+  text-align: center;
+}
+
+.Tagline #TL1 {
+  font-size: 64px;
+  margin: 0;
+  text-align: center;
+}
+
+.Tagline #TL2 {
+  font-size: 32px;
+  margin: 0;
+  text-align: center;
+}
+
+.StartButton {
+  background-color: #FEC208;
+  width: 100%;
+  height: 150px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 100px;
+  font-family: "Momo Signature", cursive;
+  animation: pulse-animation 2s infinite;
+  z-index: 100;
+  cursor: pointer;
+  transition: transform 1.5s ease-in-out;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px #fec008;
+    border-radius: 20% 20% 0% 0%;
+  }
+
+  100% {
+    box-shadow: 0 0 0 60px #fec00800;
+  }
+}
+
+.StartButton.slide-up {
+  transform: translateY(-100vh);
+  animation: none;
+}
+
+body {
+  background-color: white;
+}
+
+.master {
+  color: #FEC208;
+  float: right;
+}
+
+@media (max-width: 900px) {
+  .master {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  h1 {
+    font-size: 60px;
+  }
+
+  .Tagline #TL1 {
+    font-size: 40px;
+  }
+
+  .Tagline #TL2 {
+    font-size: 24px;
+  }
+
+  .StartButton {
+    height: 120px;
+    font-size: 60px;
+  }
+}
+
+
+
+
+
+/*END OF OVERLAY SHIT*/
+
+.MainContent {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: white;
+}
+
+nav {
+  padding: 16px 32px;
+  width: 100%;
+  height: 90px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav img {
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+}
+
+.content {
+  margin: 0 16px 16px;
+  flex: 1;
+  min-height: 0;
+  border-radius: 32px;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  padding: 32px;
+  flex-direction: row;
+  gap: 24px;
+  font-family: "Archivo Black", sans-serif;
+  overflow: hidden;
+}
+
+
+
+.row {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  gap: 16px;
+}
+
+#Left {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+#Right {
+  width: 30vw;
+  min-width: 280px;
+  max-width: 420px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* Scrollbar  This totally cam from AI i had no clue how to designa scrollbar*/
+
+#Left::-webkit-scrollbar,
+.Cards::-webkit-scrollbar,
+#Reciept::-webkit-scrollbar {
+  width: 6px;
+}
+
+#Left::-webkit-scrollbar-thumb,
+.Cards::-webkit-scrollbar-thumb,
+#Reciept::-webkit-scrollbar-thumb {
+  background: #bdbdbd;
+  border-radius: 10px;
+}
+
+
+
+.content h2 {
+  font-size: 48px;
+  font-weight: 700;
+  font-family: "Archivo Black", sans-serif;
+  width: 100%;
+  max-width: 500px;
+  text-wrap: wrap;
+}
+
+#Left h3 {
+  font-size: 32px;
+}
+
+
+
+.Cards {
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  min-height: 0;
+  flex-shrink: 0;
+  border-radius: 16px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, 250px);
+  gap: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#FoodItems {
+  height: 500px;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+#GenreSelector {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #8b0000;
+  width: 100%;
+  min-width: 0;
+  height: 250px;
+  border-radius: 16px;
+  color: white;
+  padding: 16px;
+}
+
+#GenreSelector p {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+
+#Reciept {
+  background-color: #f9f9f9;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  right: auto;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+#cart {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Individual cart items */
+#RecieptItem {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 16px;
+  flex-shrink: 0;
+}
+#Reciept h3 {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: "Archivo Black", sans-serif;
+  width: 100%;
+  max-width: 500px;
+  text-wrap: wrap;
+}
+
+#Reciept p {
+  font-family: "Archivo Black", sans-serif;
+  font-weight: 200;
+  color: rgb(31, 30, 30);
+}
+
+#Reciept #RecieptItem {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 16px;
+}
+
+#Adjuster {
+  display: flex;
+  flex-direction: row;
+  padding: 16px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+#Adjuster p {
+  font-size: 32px;
+  text-align: center;
+}
+
+#Adjuster button {
+  background: none;
+  border: solid black 1px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+
+hr {
+  width: 100%;
+  box-shadow: 0 0 0 60px #fec00800;
+  border-color: rgba(0, 0, 0, 0.28);
+}
+
+
+
+.Continue {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 16px;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  max-width: 250px;
+  margin: auto auto 0;
+  flex-shrink: 0;
+  background-color: #f9f9f9;
+}
+
+#HeadToCart button {
+  border: none;
+  width: 200px;
+  height: 200px;
+  border-radius: 60px;
+  background-color: #fec008;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+
+
+@media (min-width: 1200px) {
+  .content {
+    padding: 40px 48px;
+    gap: 40px;
+  }
+
+  #Left {
+    flex: 1;
+  }
+
+  #Right {
+    width: 30%;
+    max-width: 450px;
+  }
+
+  .Cards {
+    max-width: 1000px;
+  }
+
+  #GenreSelector p {
+    font-size: 30px;
+  }
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .content {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  #Right {
+    width: 32%;
+    min-width: 250px;
+  }
+
+  .content h2 {
+    font-size: 40px;
+  }
+
+  .Cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 220px;
+  }
+
+  #GenreSelector {
+    height: 220px;
+  }
+
+  #GenreSelector p {
+    font-size: 26px;
+  }
+
+  #HeadToCart button {
+    width: 170px;
+    height: 170px;
+  }
+}
+
+
+
+@media (max-width: 767px) {
+
+  .MainContent {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  nav {
+    height: 75px;
+    min-height: 75px;
+    padding: 10px 16px;
+  }
+
+  nav img {
+    width: 115px;
+  }
+
+  .content {
+    margin: 0;
+    padding: 16px;
+    border-radius: 0;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+  }
+
+  #Left {
+    width: 100%;
+    flex: 1;
+    padding: 0 0 90px;
+    overflow-y: auto;
+  }
+
+  .content h2 {
+    font-size: clamp(28px, 7vw, 38px);
+    max-width: 100%;
+    margin: 8px 0;
+  }
+
+  #Left h3 {
+    font-size: 24px;
+    margin: 8px 0;
+  }
+
+  .Cards {
+    width: 100%;
+    max-width: none;
+    padding: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 170px;
+    gap: 10px;
+    overflow: visible;
+  }
+
+  #GenreSelector {
+    height: 170px;
+    padding: 8px;
+  }
+
+  #GenreSelector p {
+    font-size: 20px;
+  }
+
+  #FoodItems {
+    height: auto;
+    min-height: auto;
+  }
+
+
+  #Right {
+    display: none;
+  }
+
+  /* Mobile cart because reciept on mobile looked super weird */
+
+  #MobileCart {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: #fec008;
+    color: black;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 26px;
+    z-index: 20;
+    cursor: pointer;
+    border-radius: 16px 16px 0 0;
+  }
+
+}
+
+
+
+#Modal {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(850px, 90vw);
+  height: min(85vh, 850px);
+  background-color: #ffffff;
+  color: #171717;
+  border-radius: 28px;
+  padding: 32px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  overflow-y: auto;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+  font-family: "Archivo Black", sans-serif;
+}
+
+
+#Modal  img {
+  width: 140px;
+  height: 110px;
+  object-fit: contain;
+}
+
+
+#Modal h1 {
+  color: #8b0000;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 36px;
+  margin: 0;
+}
+
+
+#Modal h3 {
+  color: #555;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  max-width: 550px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+#Modal #Price {
+  font-size: 32px;
+  color: #8b0000;
+  margin: 8px 0;
+
+}
+
+
+#Modal  #Adjuster {
+  width: 220px;
+  max-width: 100%;
+  padding: 8px;
+  align-items: center;
+  gap: 20px;
+}
+
+#Modal #Adjuster button {
+  height: 48px;
+  min-width: 48px;
+  background-color: #fec008;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+#Modal #Adjuster button p {
+  font-size: 24px;
+  margin: 0;
+  color: #171717;
+}
+
+#Modal #Adjuster  p {
+  font-size: 24px;
+  color: #171717;
+  margin: 0;
+}
+
+
+
+.AddOns {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+#AddOn {
+  width: 100%;
+  min-height: 110px;
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#AddOn  p {
+  font-size: 16px;
+  color: #222;
+  margin: 0;
+}
+
+#AddOn  img {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+}
+
+
+#AddOn #Adjuster {
+  width: 150px;
+  padding: 0;
+  gap: 8px;
+}
+
+#AddOn #Adjuster button {
+  min-width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+#AddOn #Adjuster button p {
+  font-size: 18px;
+}
+
+#AddOn #Adjuster  p {
+  font-size: 18px;
+}
+#FoodItems  img {
+  width: 100%;
+  height: 65%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+#RecieptItem img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+#Modal .Continue {
+  position: fixed;
+  bottom: 10px;
+  margin-top: auto;
+  padding: 16px 0 0;
+  width: 100vw;
+  margin: 0 0 0 0;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+#panelSubmit {
+  width: 80vw;
+}
+
+#panelSubmit button {
+  width: 100%;
+  min-height: 65px;
+  border: none;
+  border-radius: 16px;
+  background-color: #fec008;
+  color: #171717;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 22px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#panelSubmit button:hover {
+  background-color: #e8ae00;
+  transform: scale(1.01);
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  #Modal {
+    width: 85vw;
+    height: 85vh;
+    padding: 24px;
+  }
+
+  #Modal h1 {
+    font-size: 32px;
+  }
+}
+
+
+
+@media (max-width: 767px) {
+  #Modal {
+    width: 94vw;
+    height: 90dvh;
+    padding: 20px 16px;
+    border-radius: 22px;
+    gap: 12px;
+  }
+
+  #Modal  img {
+    width: 100px;
+    height: 75px;
+  }
+
+  #Modal h1 {
+    font-size: 27px;
+  }
+
+  #Modal h3 {
+    font-size: 14px;
+  }
+
+  #Modal #Price {
+    font-size: 26px;
+  }
+
+  .AddOns {
+    padding: 8px 0;
+  }
+
+  #AddOn {
+    padding: 10px;
+    gap: 8px;
+    min-height: 85px;
+  }
+
+  #AddOn  p {
+    font-size: 13px;
+  }
+
+  #AddOn  img {
+    width: 45px;
+    height: 45px;
+  }
+
+  #AddOn #Adjuster {
+    width: 115px;
+    gap: 5px;
+  }
+
+  #AddOn #Adjuster button {
+    min-width: 30px;
+    height: 32px;
+  }
+
+  #AddOn #Adjuster button p,
+  #AddOn #Adjuster  p {
+    font-size: 15px;
+  }
+
+  #panelSubmit button {
+    min-height: 58px;
+    font-size: 18px;
+  }
+}
+
+
+
+/* Cart Page*/
+.CartPage {
+  height: 100dvh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 16px 40px;
+  background-color: #f9f9f9;
+  color: #171717;
+  font-family: "Archivo Black", sans-serif;
+}
+
+.CartPage h1 {
+  color: #8b0000;
+  font-size: 40px;
+  margin: 0;
+  text-align: center;
+}
+
+.CartPanel {
+  background: #ffffff;
+  width: min(650px, 100%);
+  border-radius: 28px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.15);
+}
+
+.CartItems {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.CartItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.CartItem img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.CartItemInfo {
+  flex: 1;
+}
+
+.CartItem p {
+  margin: 0;
+  font-size: 16px;
+  color: #222;
+}
+
+.CartSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 2px solid #e5e5e5;
+  padding-top: 12px;
+}
+
+.CartRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CartRow p {
+  margin: 0;
+  font-size: 18px;
+}
+
+.CartRow h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #8b0000;
+}
+
+#SubmitOrder {
+  width: 100%;
+  min-height: 60px;
+  border: none;
+  border-radius: 16px;
+  background-color: #fec008;
+  color: #171717;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+#SubmitOrder:hover {
+  background-color: #e8ae00;
+}
+
+.BackToMenu {
+  text-align: center;
+  color: #8b0000;
+  font-size: 16px;
+  text-decoration: none;
 }
