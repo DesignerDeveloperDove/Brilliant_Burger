@@ -274,6 +274,20 @@ nav img {
   min-height: 0;
   overflow-y: auto;
 }
+#FoodFilter #GenreSelector{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #8b0000;
+  width: 100%;
+  min-width: 0;
+  height: 100px;
+  border-radius: 16px;
+  color: white;
+  padding: 16px;
+}
 
 #GenreSelector {
   display: flex;
@@ -574,7 +588,7 @@ hr {
   border-radius: 28px;
   padding: 32px;
   z-index: 40;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: 16px;
@@ -585,8 +599,13 @@ hr {
 
 
 #Modal  img {
-  width: 140px;
-  height: 110px;
+  width: 350px;
+  max-width: 400px;
+  min-width: 150px;
+  display: block;
+  margin: 0 auto;
+
+
   object-fit: contain;
 }
 
@@ -602,20 +621,25 @@ hr {
 #Modal h3 {
   color: #555;
   font-family: "Archivo Black", sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 400;
   text-align: center;
   max-width: 550px;
   margin: 0;
   line-height: 1.6;
+  display: block;
+  margin: 0 auto;
 }
 
 
 #Modal #Price {
   font-size: 32px;
   color: #8b0000;
-  margin: 8px 0;
-
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  padding: 32px;
 }
 
 
@@ -625,6 +649,7 @@ hr {
   padding: 8px;
   align-items: center;
   gap: 20px;
+  margin: 0 auto;
 }
 
 #Modal #Adjuster button {
@@ -648,11 +673,8 @@ hr {
   margin: 0;
 }
 
-
-
 .AddOns {
   width: 100%;
-  max-width: 650px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -662,11 +684,10 @@ hr {
 #AddOn {
   width: 100%;
   min-height: 110px;
-  background-color: #f9f9f9;
   border: 1px solid #e5e5e5;
   border-radius: 16px;
   padding: 16px;
-
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -720,8 +741,7 @@ hr {
 }
 
 #Modal .Continue {
-  position: fixed;
-  bottom: 10px;
+  
   margin-top: auto;
   padding: 16px 0 0;
   width: 100vw;

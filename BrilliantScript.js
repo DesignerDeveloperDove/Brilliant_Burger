@@ -1,4 +1,7 @@
 /** SO THIS IS GONNA BE A FAKE API , for all checking out the code its from DUMMYJSON and its the format our database information needs to come in on order for the web app to work! it must be hosted live , if you can host it on my own domain and then pull the information like this :  fetch('myportfolio.com/projects/DATABASEINFO')  It should be pushed into json format and then us*/
+
+
+
 let cart = JSON.parse(localStorage.getItem("BrilliantCart")) || [];
 
 function saveCart() {
@@ -30,7 +33,7 @@ function initMenu() {
     });
   }
 
-  /* MODAL CLOSE (X) */
+  /* it just adds an X because i sisnt feel like styling it  */
   function closeModal() {
     modal.style.display = "none";
   }
@@ -44,6 +47,7 @@ function initMenu() {
     "font-size:28px;line-height:1;cursor:pointer;";
   closeBtn.onclick = closeModal;
   modal.prepend(closeBtn);
+  /* totally got the css from chat full transparency  */
 
   /* DATA (DummyJSON for now; swap in your own domain later) */
   fetch("https://dummyjson.com/recipes?limit=50")
@@ -71,53 +75,36 @@ function initMenu() {
     });
   }
 
-  /* CATEGORY FILTERING */
-  document.querySelectorAll("#FoodGenres #GenreSelector").forEach(category => {
-    category.onclick = () => {
-      const name = category.textContent.toLowerCase();
+  /* CATEGORY FILTERING */document.querySelectorAll("#FoodFilter #GenreSelector").forEach(category => {
+  category.onclick = () => {
+    const name = category.textContent.trim().toLowerCase();
+    const hasTag = (food, word) =>
+      food.tags.some(tag => tag.toLowerCase().includes(word));
 
-      if (name.includes("meals")) {
-        displayFood(recipes);
-      }
-      else if (name.includes("chicken")) {
-        displayFood(recipes.filter(food =>
-          food.tags.some(tag => tag.toLowerCase().includes("chicken")) ||
-          food.name.toLowerCase().includes("chicken")
-        ));
-      }
-      else if (name.includes("desert") || name.includes("dessert")) {
-        displayFood(recipes.filter(food =>
-          food.tags.some(tag => tag.toLowerCase().includes("dessert"))
-        ));
-      }
-      else if (name.includes("burger")) {
-        displayFood(recipes.filter(food =>
-          food.name.toLowerCase().includes("burger") ||
-          food.tags.some(tag => tag.toLowerCase().includes("burger"))
-        ));
-      }
-      else if (name.includes("sides")) {
-        displayFood(recipes.filter(food =>
-          food.tags.some(tag => tag.toLowerCase().includes("side"))
-        ));
-      }
-      else if (name.includes("drinks")) {
-        displayFood([]);
-      }
-    };
-  });
-
-  /* OPEN MODAL */
-  function openModal(food) {
-    selectedFood = food;
-
-    modal.querySelector("h1").textContent = food.name;
-    modal.querySelector("h3").textContent = food.ingredients.join(", ");
-    modal.querySelector("#Price").textContent = "$" + getPrice(food).toFixed(2);
-    modal.querySelector("#Adjuster #value").textContent = "1";
-
-    modal.style.display = "block";
-  }
+    if (name.includes("meal")) {
+      displayFood(recipes);
+    }
+    else if (name.includes("chicken")) {
+      displayFood(recipes.filter(food =>
+        hasTag(food, "chicken") || food.name.toLowerCase().includes("chicken")
+      ));
+    }
+    else if (name.includes("dessert") || name.includes("desert")) {
+      displayFood(recipes.filter(food => hasTag(food, "dessert")));
+    }
+    else if (name.includes("burger")) {
+      displayFood(recipes.filter(food =>
+        hasTag(food, "burger") || food.name.toLowerCase().includes("burger")
+      ));
+    }
+    else if (name.includes("side")) {
+      displayFood(recipes.filter(food => hasTag(food, "side")));
+    }
+    else if (name.includes("drink")) {
+      displayFood(recipes.filter(food => hasTag(food, "drink")));
+    }
+  };
+});
 
   /* MODAL QUANTITY BUTTONS */
   document.querySelectorAll("#Modal #Adjuster button").forEach(button => {
@@ -272,3 +259,162 @@ function initCart() {
 
   renderCart();
 }
+
+//GSAP ANIMATIONS: 
+if (typeof gsap !== "undefined") {
+    const isMenu = document.querySelector("#FoodItems") !== null;
+    const isCart = document.querySelector("#CartItems") !== null;
+  
+    if (isMenu) {
+      /* Start screen intro */
+      gsap.from(".StartScreenOverlay h1, .StartScreenOverlay img, #TL1, #TL2", {
+        opacity: 0,
+        y: 20,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out"
+      });
+  
+      /* Menu fades in after Start is clicked */
+      document.querySelector(".StartButton").addEventListener("click", () => {
+        gsap.from(".MainContent nav, .MainContent .content", {
+          opacity: 0,
+          y: 12,
+          stagger: 0.1,
+          duration: 0.8,
+          delay: 0.6,
+          ease: "power2.out"
+        });
+      });
+  
+      /* Category buttons stagger in */
+      gsap.from("#FoodFilter #GenreSelector", {
+        opacity: 0,
+        y: 15,
+        stagger: 0.08,
+        duration: 0.4,
+        delay: 0.6,
+        ease: "power2.out"
+      });
+  
+      /* Food cards animate in whenever displayFood() replaces them */
+      const foodItems = document.querySelector("#FoodItems");
+  
+      new MutationObserver(mutations => {
+        const cards = mutations
+          .flatMap(m => [...m.addedNodes])
+          .filter(node => node.classList && node.classList.contains("FoodCard"));
+  
+        if (cards.length) {
+          gsap.from(cards, {
+            opacity: 0,
+            y: 20,
+            duration: 0.35,
+            stagger: 0.04,
+            ease: "power2.out",
+            clearProps: "transform,opacity"
+          });
+        }
+      }).observe(foodItems, { childList: true });
+  
+      /* Food card hover lift */
+      foodItems.addEventListener("mouseover", e => {
+        const card = e.target.closest(".FoodCard");
+        if (card) gsap.to(card, { scale: 1.03, duration: 0.2, ease: "power1.out" });
+      });
+  
+      foodItems.addEventListener("mouseout", e => {
+        const card = e.target.closest(".FoodCard");
+        if (card && !card.contains(e.relatedTarget)) {
+          gsap.to(card, { scale: 1, duration: 0.2, ease: "power1.out" });
+        }
+      });
+  
+      /* Category press effect */
+      document.addEventListener("click", e => {
+        const genre = e.target.closest("#FoodFilter #GenreSelector");
+        if (genre) {
+          gsap.fromTo(genre, { scale: 0.94 }, { scale: 1, duration: 0.35, ease: "back.out(2)" });
+        }
+      });
+  
+      /* Small press effect on every button, including ones created later */
+      document.addEventListener("pointerdown", e => {
+        const btn = e.target.closest("button");
+        if (btn && btn.closest("#Modal, #Reciept")) return;
+                if (btn) {
+          gsap.fromTo(btn, { scale: 0.93 }, { scale: 1, duration: 0.2, ease: "power1.out" });
+        }
+      });
+  
+      /* Modal fades in when it opens */
+      const modal = document.querySelector("#Modal");
+      let modalWasOpen = false;
+      
+      new MutationObserver(() => {
+        const isOpen = modal.style.display === "block";
+      
+        if (isOpen && !modalWasOpen) {
+          gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power1.out" });
+          gsap.from("#Modal > *", {
+            opacity: 0,
+            y: 12,
+            stagger: 0.04,
+            duration: 0.3,
+            delay: 0.05,
+            ease: "power2.out"
+          });
+        }
+      
+        modalWasOpen = isOpen;
+      }).observe(modal, { attributes: true, attributeFilter: ["style"] });
+      /* Receipt items slide in when the cart changes */
+      new MutationObserver(() => {
+        gsap.from("#cart > #RecieptItem", {
+          opacity: 0,
+          x: 16,
+          duration: 0.3,
+          stagger: 0.05,
+          ease: "power2.out"
+        });
+      }).observe(document.querySelector("#cart"), { childList: true });
+  
+      /* Total gives a small bump when it changes */
+      const totalEl = document.querySelector("#HeadToCart h3");
+  
+      new MutationObserver(() => {
+        gsap.fromTo(totalEl, { scale: 1.15 }, { scale: 1, duration: 0.4, ease: "back.out(2)" });
+      }).observe(totalEl, { childList: true, characterData: true, subtree: true });
+    }
+  
+    if (isCart) {
+      gsap.from(".CartPage h1", { opacity: 0, y: -10, duration: 0.5, ease: "power2.out" });
+  
+      gsap.from(".CartPanel", {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        ease: "power3.out"
+      });
+  
+      /* Cart items stagger in when rendered */
+      new MutationObserver(() => {
+        gsap.from("#CartItems > .CartItem", {
+          opacity: 0,
+          x: -15,
+          stagger: 0.08,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      }).observe(document.querySelector("#CartItems"), { childList: true });
+  
+      /* Gentle glow on the Submit button */
+      gsap.to("#SubmitOrder", {
+        boxShadow: "0 0 0 8px rgba(254, 192, 8, 0.25)",
+        duration: 1.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+    }
+  }
